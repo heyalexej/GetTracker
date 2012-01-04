@@ -39,30 +39,29 @@ for h in hosts:
     try:
         webpage = urllib2.urlopen (req, timeout=2)
     except urllib2.HTTPError as e:
-        err.write (",".join ([h[0], h[1][:-1], str (e.code), e.msg]))
-        err.write ("\n")
+        err.write (",".join ([h[0], h[1][:-1], str (e.code), e.msg]) + "\n")
         err.flush ()
     except socket.timeout:
-        err.write (",".join ([h[0], h[1][:-1], "0", "Socket timeout"]))
+        err.write (",".join ([h[0], h[1][:-1], "0", "Socket timeout\n"]))
         err.flush ()
     except urllib2.URLError:
-        err.write (",".join ([h[0], h[1][:-1], "0", "URLlib2 timeout"]))
+        err.write (",".join ([h[0], h[1][:-1], "0", "URLlib2 timeout\n"]))
         err.flush ()
     except: # Generic error
-        err.write (",".join ([h[0], h[1][:-1], "0", str (sys.exc_info()[0])]))
+        err.write (",".join ([h[0], h[1][:-1], "0", str (sys.exc_info()[0])]) + "\n")
         err.flush ()
     else:
         try:
             page = webpage.read ()
         except:
-            err.write (",".join ([h[0], h[1][:-1], "0", "Socket timeout"]))
+            err.write (",".join ([h[0], h[1][:-1], "0", "Socket timeout\n"]))
             err.flush ()
             continue
 
         try:
             soup = BeautifulSoup (page)
         except:
-            err.write (",".join ([h[0], h[1][:-1], "0", "BeautifulSoup cannot parse the page"]))
+            err.write (",".join ([h[0], h[1][:-1], "0", "BeautifulSoup cannot parse the page\n"]))
             err.flush ()
             continue
 
